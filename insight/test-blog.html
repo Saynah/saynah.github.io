@@ -1679,7 +1679,7 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[8]:
+In&nbsp;[33]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1696,14 +1696,15 @@ In&nbsp;[8]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[8]:</div>
+    Out[33]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <script>
 var code_show=true; //true -> hide code at first
-$('div.prompt').hide();
 
 function code_toggle() {
+	$('div.prompt').hide(); // always hide prompt
+
  	if (code_show){
  		$('div.input').hide();
  	} else {
@@ -1731,7 +1732,11 @@ $( document ).ready(code_toggle);
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This is prose.</p>
-<p>This is a TOC. * <a href="#Section-1">section 1</a> * <a href="#Section-2">section 2</a></p>
+<p>This is a TOC.</p>
+<ul>
+<li><a href="#Section-1">section 1</a></li>
+<li><a href="#Section-2">section 2</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -1757,7 +1762,7 @@ $( document ).ready(code_toggle);
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[9]:
+In&nbsp;[34]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1808,7 +1813,7 @@ this is output
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[11]:
+In&nbsp;[35]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
