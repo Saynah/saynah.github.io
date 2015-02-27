@@ -1679,7 +1679,7 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[148]:
+In&nbsp;[156]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1697,7 +1697,7 @@ In&nbsp;[148]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[148]:</div>
+    Out[156]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <script>
@@ -1739,6 +1739,7 @@ In&nbsp;[148]:
 	<br>
 	<a href="https://www.linkedin.com/in/marksena" target="_blank">LinkedIn</a>
 	<br>
+	<!-- <a href="https://marksena.me/insight/resume.pdf" target="_blank">Resume</a> -->
 	<a href="https://docs.google.com/document/d/1CR99i0eFB2e0k-ur-V4OI6QGkXWoUu7Itu4vveOPhvo/edit?pli=1" target="_blank">Resume</a>
 
 </div>
@@ -9900,7 +9901,7 @@ ERGRQfh/LNt3f3sS0f4AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since there are so many distinct exercises, let's only consider the 5 most frequent. Later, we can try to perform some clustering to identify groups of related exercises, but we'll need to come up with a way to valdate that.</p>
+<p>Since there are so many distinct exercises, let's only consider the 5 most frequent. Later, we can try to perform some clustering to identify groups of related exercises, but we'll need to come up with a way to validate those clusters (One idea is to ask a professional trainer to group similar exercises, and then check out those groups compare to automatically-detected custers).</p>
 </div>
 </div>
 </div>
@@ -10055,7 +10056,12 @@ In&nbsp;[99]:
 <li>are diverse enough to characterize independent aspects of an exercise</li>
 <li>are intuitive and biomechanically relevant</li>
 </ul>
-<p>I designed sets of features that &quot;live&quot; in the EMG-signal domain, the time domain, and the frequency domain.</p>
+<p>As a start, I designed sets of features that &quot;live&quot; in the EMG-signal domain, the frequency domain, and the time domain.</p>
+<ul>
+<li>The first set (8 features) represent the <em>intensity of muscle contraction</em> for the inner and outer quads, hamstrings, and glutes for the right and left legs.<br />Intensities were quantified as the mean peak values for each sensor channel.</li>
+<li>The next set (2 features) represent the <em>cadence, or tempo</em> of muscle contraction during the exercise.<br />Cadence was quantified by extracting the two strongest frequency components across all sensor channels.</li>
+<li>The last set (8 features) represent <em>relative timing</em> of muscle contraction.<br />Relative timing was quantified as phase lag (derived from the cross-correlation) between pairs of sensor channels.</li>
+</ul>
 <!--
 * selecting features to characterize the EMG signals
 * distribution of features, and normalization/transformation if needed
@@ -10071,11 +10077,6 @@ In&nbsp;[99]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Here's a nice scatter plot to visualize the relationships between features. The diagonals show a kernel-density estimation plot for each feature.</p>
-<ul>
-<li>The first 8 features represent the <em>intensity of muscle contraction</em> for the inner and outer quads, hamstrings, and glutes for the right and left legs.</li>
-<li>The next 2 features represent the <em>cadence, or tempo</em> of muscle contraction during the exercise.</li>
-<li>The last 8 features represent <em>relative timing</em> of muscle contraction.</li>
-</ul>
 </div>
 </div>
 </div>
@@ -18405,6 +18406,15 @@ VQAAANgWYRUAAAC2RVgFAACAbf1/X+2PbCvhduoAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>From this visual representation, it appears that the <code>Stairs</code> exercise (green) is fairly distinct, <code>Leg Press</code> and <code>Hamstring Curls</code> examples are fairly distributed across the feature space, while <code>Butt Blaster</code> and <code>Glute Bridge</code> are more concentrated, but embedded in the region of the feature space that is heavily occupied.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Model-development-and-testing">Model development and testing<a class="anchor-link" href="#Model-development-and-testing">&#182;</a></h2>
 </div>
 </div>
@@ -18415,7 +18425,7 @@ VQAAANgWYRUAAAC2RVgFAACAbf1/X+2PbCvhduoAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have a reduced set of labels, clean data, and reasonable features, we can train a few classifiers to distinguish between different exercises.</p>
+<p>Now that we have a reduced set of Exercise labels, clean data, and reasonable features, we can train a few classifiers to distinguish between different exercises.</p>
 </div>
 </div>
 </div>
@@ -19143,8 +19153,9 @@ ACwkBABYSAgAsJAQAGAhIQDAQkIAgIWEAAALCQEAFhICACwCpfjeozeBxwIAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Wow, that worked pretty well. But by looking horizontally along rows, it's clear that this classifier is confusing instances of <code>Butt Blaster</code> with <code>Leg Press</code>, and <code>Glute Bridge</code> with <code>Hamstring Curl</code>. As we showed earlier, in this particlar dataset, <code>Leg Press</code> is over-represented while <code>Glute Bridge</code> was under-represented.</p>
-<p>So, it probably makes sense to account for unbalanced classes by applying some sort of weighting scheme. In scikit-learn, we can weight the C-parameter used for each class by the inverse frequency of that class.</p>
+<p>Wow, that worked pretty well. When I first got this result I was pleasently surprised.</p>
+<p>But by looking horizontally along rows, it's clear that this classifier is confusing instances of <code>Butt Blaster</code> with <code>Leg Press</code>, and <code>Glute Bridge</code> with <code>Hamstring Curl</code>. As we showed earlier, in this particlar dataset, <code>Leg Press</code> is over-represented while <code>Glute Bridge</code> was under-represented, so this result makes sense. If trained on unbalanced labels, a classifier will more often predict the classes that are over-represented.</p>
+<p>To account for unbalanced classes, we can apply some sort of weighting scheme. This is easy to do in scikit-learn using the <code>class_weights</code> parameter, which scales the each class's C-parameter by the inverse frequency of that class.</p>
 </div>
 </div>
 </div>
@@ -19802,7 +19813,7 @@ AMBCQgCAhYQAAIsAAzfjIZTvb4sAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>By accounding for unbalanced classes, the overall accuracy was not better, but that's OK. Since we don't expect <code>Leg Press</code> (which is over-represented in this dataset) to be performed more often under normal circumstances we shouldn't &quot;cheat&quot; by predicting it too often.</p>
+<p>By accounding for unbalanced classes, the overall accuracy was not better, but that's OK. Since we don't expect <code>Leg Press</code> (which is over-represented in this dataset) to be performed more often under normal circumstances we shouldn't &quot;cheat&quot; by predicting it more often than we should.</p>
 </div>
 </div>
 </div>
@@ -19821,7 +19832,8 @@ AMBCQgCAhYQAAIsAAzfjIZTvb4sAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Great, we've got a model that does a fairly good job of predicting the kind of activity an individual is doing. Now we can try to optimize model performance using a grid search with a nested k-fold cross validation.</p>
+<p>Great, we've got a model that does a fairly good job of predicting the kind of activity an individual is doing. Now we can try to optimize model performance on the training data using a grid search with a nested 5-fold cross validation. During this process, models are trained on 4/5ths of the training data and evaluated on 1/5th (this is repeated 5 times). Parameters are then chosen based on the average of some performance metric (in our case, 'recall').</p>
+<p>This technique is nice because it leaves our test set untouched (which is critical), without requiring us to set aside a separate set of data strictly for parameter tuning.</p>
 </div>
 </div>
 </div>
@@ -21274,7 +21286,8 @@ AAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's get the feature importances from this forest. Apparently, (see <a href="http://stackoverflow.com/questions/15810339/how-are-feature-importances-in-randomforestclassifier-determined">stackoverflow</a>) these are calulated using &quot;Gini importance&quot; or &quot;mean decrease impurity&quot;, which I imagine is similar to &quot;mean decrease accuracy&quot;, but the measure of interest is Precision rather than Recall.</p>
+<p>One nice aspect of Tree Ensembles like Random Forests and Extra Trees is that (at least in scikit-learn) it's straightforward to compute feature importances. The basic idea is to scramble each feature column and then measure the decrease in model performance.</p>
+<p>Apparently, (see <a href="http://stackoverflow.com/questions/15810339/how-are-feature-importances-in-randomforestclassifier-determined">stackoverflow</a>) these are calulated using &quot;Gini importance&quot; or &quot;mean decrease impurity&quot;, which I imagine is similar to &quot;mean decrease accuracy&quot;, but the measure of interest is Precision rather than Recall.</p>
 </div>
 </div>
 </div>
@@ -21630,6 +21643,15 @@ fwAu2OmmvcaSgQAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>We could have also done something similar for our SVM using <a href="http://scikit-learn.org/stable/auto_examples/plot_rfe_digits.html#example-plot-rfe-digits-py">Recursive Feature Elimination</a></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Next-steps-and-future-work">Next steps and future work<a class="anchor-link" href="#Next-steps-and-future-work">&#182;</a></h2>
 </div>
 </div>
@@ -21658,7 +21680,7 @@ fwAu2OmmvcaSgQAAAABJRU5ErkJggg==
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[150]:
+In&nbsp;[158]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -21674,7 +21696,7 @@ In&nbsp;[150]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[150]:</div>
+    Out[158]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <!-- get rid of "Notebook title" -->
