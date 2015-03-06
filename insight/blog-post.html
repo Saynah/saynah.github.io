@@ -1679,7 +1679,7 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[156]:
+In&nbsp;[1]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -1697,7 +1697,7 @@ In&nbsp;[156]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[156]:</div>
+    Out[1]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <script>
@@ -1840,7 +1840,7 @@ In&nbsp;[3]:
 <li>summarize the dataset</li>
 <li>select portions of the data for training/testing/validation</li>
 </ul>
-<p><em>My undertanding is that Athos has since transitioned to a more streamlined data collection and processing pipeline. However, their older data is incredibly valuable, so they asked for my help extracting insights from it.</em></p>
+<p><em>My understanding is that Athos has since transitioned to a more streamlined data collection and processing pipeline. However, their older data is incredibly valuable, so they asked for my help extracting insights from it.</em></p>
 </div>
 </div>
 </div>
@@ -1859,7 +1859,7 @@ In&nbsp;[3]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Data was in the form of CSV files nested under various parent dirctories correpsonding to the type of exercise performed and the person performing the exercise. As is often the case, the direcory and folders were named using different conventions, sometimes with missspellings. So my first challenge was to parse out the relevant metadata from file and folder names and generate appropriate labels.</p>
+<p>Data was in the form of CSV files nested under various parent directories corresponding to the type of exercise performed and the person performing the exercise. As is often the case, the directory and folders were named using different conventions, sometimes with misspellings. So my first challenge was to parse out the relevant metadata from file and folder names and generate appropriate labels.</p>
 <p>To achieve this, I used a combination of regular expressions and fuzzy string matching to:<br />1) capture the relevant tokens within folder and file names, and<br />2) map those tokens to a set of known exercises and individuals, which serve as labels for the data.</p>
 </div>
 </div>
@@ -1922,7 +1922,7 @@ MarkSena _ButtBlaster_L20plus45.csv 	-&gt;  [(&apos;MarkSena &apos;, &apos;ButtB
 <p>Applying this technique to folder names and CSV file names underneath the main data directory, I obtained:</p>
 <ul>
 <li>a table for all data directories and their labels, and</li>
-<li>a table for all csv files and their lables (indexed by directory)</li>
+<li>a table for all csv files and their labels (indexed by directory)</li>
 </ul>
 <p>along with a record for the directories and files that could not be parsed:</p>
 </div>
@@ -2632,7 +2632,7 @@ In&nbsp;[7]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At the early stages of analysis, nothing beats visully inspecting the data to get a feel for its properites. In the case of ATHOS' data, I knew that I would be working with times series data from eight EMG sensors taking muscle-activity readings from the inner and outer quads, hamstrings, and glutes.</p>
+<p>At the early stages of analysis, nothing beats visually inspecting the data to get a feel for its properites. In the case of ATHOS' data, I knew that I would be working with times series data from eight EMG sensors taking muscle-activity readings from the inner and outer quads, hamstrings, and glutes.</p>
 </div>
 </div>
 </div>
@@ -2641,7 +2641,7 @@ In&nbsp;[7]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To inspect the EMG data, I created plots of the muscle activty for the left and right legs during all of the represented exercises and dumped them to a folder to thumb through.</p>
+<p>To inspect the EMG data, I created plots of the muscle activity for the left and right legs during all of the represented exercises and dumped them to a folder to thumb through.</p>
 </div>
 </div>
 </div>
@@ -7607,7 +7607,7 @@ In&nbsp;[12]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>After getting a feel for the data in general, it's a great idea to come up with some simple quality metrics and plot their distributions. This can help identify any obvious issues or errors (i.e. &quot;data smells&quot;) that could potentially affect downstream results. In my case, after insepcting the data, not only did I observe some patterns in the data, but I also found some evidence of bad EMG recordings.</p>
+<p>After getting a feel for the data in general, it's a great idea to come up with some simple quality metrics and plot their distributions. This can help identify any obvious issues or errors (i.e. &quot;data smells&quot;) that could potentially affect downstream results. In my case, after inspecting the data, not only did I observe some patterns in the data, but I also found some evidence of bad EMG recordings.</p>
 <p>Based on some of my observations, I came up with some criteria for discerning 'good' data from potentially 'bad' data, and excluded a portion of the data. Notably, most of the data files I excluded had a large fraction of 0-values for one or more of the EMG leads, which could have been due to a broken lead, or bad contact between the sensor and the user's skin. Other quality metrics I evaluated include:</p>
 <ul>
 <li>number of rows - to find files that are too short or long enough to sample multiple times</li>
@@ -8999,7 +8999,7 @@ SUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Based on this, we can define some exclsion criteria:</p>
+<p>Based on this, we can define some exclusion criteria:</p>
 <ul>
 <li>trials must be longer than 500, or ~12.5 sec (not too short)</li>
 <li>the fraction of repeated values must be less than 60% (not too laggy)</li>
@@ -9901,7 +9901,7 @@ ERGRQfh/LNt3f3sS0f4AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since there are so many distinct exercises, let's only consider the 5 most frequent. Later, we can try to perform some clustering to identify groups of related exercises, but we'll need to come up with a way to validate those clusters (One idea is to ask a professional trainer to group similar exercises, and then check out those groups compare to automatically-detected custers).</p>
+<p>Since there are so many distinct exercises, let's only consider the 5 most frequent. Later, we can try to perform some clustering to identify groups of related exercises, but we'll need to come up with a way to validate those clusters (One idea is to ask a professional trainer to group similar exercises, and then check out those groups compare to automatically-detected clusters).</p>
 </div>
 </div>
 </div>
@@ -18469,7 +18469,7 @@ In&nbsp;[109]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>First, let's try an SVM with a Gaussian kernel. SVMs are binary classifiers by definition, but they can be used in a &quot;one-vs-rest&quot; (or in the case of scikit-learn, &quot;one-vs-one&quot;) framework to act as a multi-class classifer.</p>
+<p>First, let's try an SVM with a Gaussian kernel. SVMs are binary classifiers by definition, but they can be used in a &quot;one-vs-rest&quot; (or in the case of scikit-learn, &quot;one-vs-one&quot;) framework to act as a multi-class classifier.</p>
 </div>
 </div>
 </div>
@@ -19153,7 +19153,7 @@ ACwkBABYSAgAsJAQAGAhIQDAQkIAgIWEAAALCQEAFhICACwCpfjeozeBxwIAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Wow, that worked pretty well. When I first got this result I was pleasently surprised.</p>
+<p>Wow, that worked pretty well. When I first got this result I was pleasantly surprised.</p>
 <p>But by looking horizontally along rows, it's clear that this classifier is confusing instances of <code>Butt Blaster</code> with <code>Leg Press</code>, and <code>Glute Bridge</code> with <code>Hamstring Curl</code>. As we showed earlier, in this particlar dataset, <code>Leg Press</code> is over-represented while <code>Glute Bridge</code> was under-represented, so this result makes sense. If trained on unbalanced labels, a classifier will more often predict the classes that are over-represented.</p>
 <p>To account for unbalanced classes, we can apply some sort of weighting scheme. This is easy to do in scikit-learn using the <code>class_weights</code> parameter, which scales the each class's C-parameter by the inverse frequency of that class.</p>
 </div>
@@ -19813,7 +19813,7 @@ AMBCQgCAhYQAAIsAAzfjIZTvb4sAAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>By accounding for unbalanced classes, the overall accuracy was not better, but that's OK. Since we don't expect <code>Leg Press</code> (which is over-represented in this dataset) to be performed more often under normal circumstances we shouldn't &quot;cheat&quot; by predicting it more often than we should.</p>
+<p>By accounting for unbalanced classes, the overall accuracy was not better, but that's OK. Since we don't expect <code>Leg Press</code> (which is over-represented in this dataset) to be performed more often under normal circumstances we shouldn't &quot;cheat&quot; by predicting it more often than we should.</p>
 </div>
 </div>
 </div>
@@ -20564,7 +20564,7 @@ In&nbsp;[137]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can use a similar approach to tune the parameters of an Extremeley Randomized Trees classifier. Here we'll use a random search instead of a grid search...just for the sake of randomness, of course ;-)</p>
+<p>We can use a similar approach to tune the parameters of an Extremely Randomized Trees classifier. Here we'll use a random search instead of a grid search...just for the sake of randomness, of course ;-)</p>
 </div>
 </div>
 </div>
@@ -21680,7 +21680,7 @@ fwAu2OmmvcaSgQAAAABJRU5ErkJggg==
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In&nbsp;[158]:
+In&nbsp;[2]:
 </div>
 <div class="inner_cell">
     <div class="input_area">
@@ -21696,7 +21696,7 @@ In&nbsp;[158]:
 
 
 <div class="output_area"><div class="prompt output_prompt">
-    Out[158]:</div>
+    Out[2]:</div>
 
 <div class="output_html rendered_html output_subarea output_pyout">
 <!-- get rid of "Notebook title" -->
